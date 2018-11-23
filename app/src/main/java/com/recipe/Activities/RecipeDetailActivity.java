@@ -12,7 +12,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.recipe.Model.Movie;
+import com.recipe.Model.Recipe;
 import com.recipe.R;
 import com.recipe.Util.Constants;
 import com.squareup.picasso.Picasso;
@@ -21,15 +21,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MovieDetailActivity extends AppCompatActivity {
+public class RecipeDetailActivity extends AppCompatActivity {
 
-    private Movie movie;
-    private TextView movieTitle;
-    private ImageView movieImage;
+    private Recipe recipe;
+    private TextView name;
+    private ImageView image;
     private TextView movieYear;
     private TextView director;
     private TextView actors;
-    private TextView category;
+    private TextView cuisine;
     private TextView rating;
     private TextView writers;
     private TextView plot;
@@ -37,20 +37,20 @@ public class MovieDetailActivity extends AppCompatActivity {
     private TextView runtime;
 
     private RequestQueue queue;
-    private String movieId;
+    private long recipeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_detail);
+        setContentView(R.layout.activity_recipe_detail);
         queue = Volley.newRequestQueue(this);
-        movie = (Movie) getIntent().getSerializableExtra("movie");
-        movieId = movie.getImdbId();
+        recipe = (Recipe) getIntent().getSerializableExtra("recipe");
+        recipeId = recipe.getId();
         setUpUI();
-        getMovieDetails(movieId);
+        getMovieDetails(recipeId);
     }
 
-    private void getMovieDetails(String id) {
+    private void getMovieDetails(long id) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
                 Constants.URL + id+Constants.API_KEY, new Response.Listener<JSONObject>() {
             @Override
@@ -68,7 +68,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                         }else {
                             rating.setText("Ratings: N/A");
                         }
-                        movieTitle.setText(response.getString("Title"));
+                        name.setText(response.getString("Title"));
                         movieYear.setText("Released: " + response.getString("Released"));
                         director.setText("Director: " + response.getString("Director"));
                         writers.setText("Writers: " + response.getString("Writer"));
@@ -77,7 +77,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                         actors.setText("Actors: " + response.getString("Actors"));
                         Picasso.with(getApplicationContext())
                                 .load(response.getString("Poster"))
-                                .into(movieImage);
+                                .into(image);
                         boxOffice.setText("Box Office: " + response.getString("BoxOffice"));
                     }
                 }catch (JSONException e) {
@@ -95,11 +95,11 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     private void setUpUI() {
-        movieTitle = findViewById(R.id.movieTitleIDDets);
-        movieImage = findViewById(R.id.movieImageIDDets);
-        movieYear = findViewById(R.id.movieReleaseIDDets);
+        name = findViewById(R.id.recipeNameIDDets);
+        image = findViewById(R.id.recipeImageIDDets);
+        movieYear = findViewById(R.id.recipeTimeIDDets);
         director = findViewById(R.id.directedByDet);
-        category = findViewById(R.id.movieCatIDDet);
+        cuisine = findViewById(R.id.recipeCuisineIDDet);
         rating = findViewById(R.id.movieRatingIDDet);
         writers = findViewById(R.id.writersDet);
         plot = findViewById(R.id.plotDet);

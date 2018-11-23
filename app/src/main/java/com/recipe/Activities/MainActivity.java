@@ -20,8 +20,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.recipe.Data.MovieRecyclerViewAdapter;
-import com.recipe.Model.Movie;
+import com.recipe.Data.RecipeRecyclerViewAdapter;
+import com.recipe.Model.Recipe;
 import com.recipe.R;
 import com.recipe.Util.Constants;
 import com.recipe.Util.Prefs;
@@ -31,13 +31,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private MovieRecyclerViewAdapter movieRecyclerViewAdapter;
-    private List<Movie> movieList;
+    private RecipeRecyclerViewAdapter recipeRecyclerViewAdapter;
+    private List<Recipe> recipeList;
     private RequestQueue queue;
     private AlertDialog.Builder alertDialogBuilder;
     private AlertDialog dialog;
@@ -63,12 +64,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         Prefs prefs = new Prefs(MainActivity.this);
         String search = prefs.getSearch();
-        movieList = new ArrayList<>();
+        recipeList = new ArrayList<>();
        // getMovies(search);
-        movieList = getMovies(search);
-        movieRecyclerViewAdapter = new MovieRecyclerViewAdapter(this, movieList );
-        recyclerView.setAdapter(movieRecyclerViewAdapter);
-        movieRecyclerViewAdapter.notifyDataSetChanged();
+        recipeList = getMovies(search);
+        recipeRecyclerViewAdapter = new RecipeRecyclerViewAdapter(this, recipeList);
+        recyclerView.setAdapter(recipeRecyclerViewAdapter);
+        recipeRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -109,9 +110,9 @@ public class MainActivity extends AppCompatActivity {
                 if (!newSearchEdt.getText().toString().isEmpty()) {
                     String search = newSearchEdt.getText().toString();
                     prefs.setSearch(search);
-                    movieList.clear();
+                    recipeList.clear();
                     getMovies(search);
-                    movieRecyclerViewAdapter.notifyDataSetChanged();//Very important!!
+                    recipeRecyclerViewAdapter.notifyDataSetChanged();//Very important!!
                 }
                 dialog.dismiss();
             }
@@ -119,29 +120,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Get movies
-    public List<Movie> getMovies(String searchTerm) {
-        movieList.clear();
+    public List<Recipe> getMovies(String searchTerm) {
+        recipeList.clear();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                Constants.URL_LEFT + searchTerm + Constants.URL_RIGHT + Constants.API_KEY, new Response.Listener<JSONObject>() {
+                Constants.URL_LEFT + searchTerm, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try{
-                    JSONArray moviesArray = response.getJSONArray("Search");
-                    for (int i = 0; i < moviesArray.length(); i++) {
-                        JSONObject movieObj = moviesArray.getJSONObject(i);
-                        Movie movie = new Movie();
-                        movie.setTitle(movieObj.getString("Title"));
-                        movie.setYear("Year Released: " + movieObj.getString("Year"));
-                        movie.setMovieType("Type: " + movieObj.getString("Type"));
-                        movie.setPoster(movieObj.getString("Poster"));
-                        movie.setImdbId(movieObj.getString("imdbID"));
-                        //Log.d("Movies: ", movie.getTitle());
-                        movieList.add(movie);
+                    JSONArray jsonArray = response.getJSONArray("Search");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject recipeObj = jsonArray.getJSONObject(i);
+                        Recipe recipe = new Recipe();
+                        recipe.setName(recipeObj.getString("name"));
+                        recipe.setTotalTime("Total Time: " + recipeObj.getString("totalTime"));
+                        recipe.setTotalCal("Total Calories: " + recipeObj.getDouble("totalCal"));
+                        recipe.setFat_kcal(recipeObj.getString("fat_kcal"));
+                        recipe.setEnerc_fat(recipeObj.getString("enerc_fat"));
+                        recipe.setSource_url(recipeObj.getString("source_url"));
+                        recipe.setCourse(recipeObj.getString("course"));
+                        recipe.setCuisine(recipeObj.getString("cuisine"));
+                        recipe.setPhoto(recipeObj.getString("photo"));
+                        recipeList.add(recipe);
                     }
                     /**
                      * Very important!! Otherwise, we wont see anything being displayed.
                      */
-                    movieRecyclerViewAdapter.notifyDataSetChanged();
+                    recipeRecyclerViewAdapter.notifyDataSetChanged();
                 }catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -153,6 +157,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         queue.add(jsonObjectRequest);
-        return movieList;
+        return recipeList;
     }
 }

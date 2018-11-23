@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.recipe.Activities.MovieDetailActivity">
+    tools:context="com.recipe.Activities.RecipeDetailActivity">
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardviewDets"
@@ -24,37 +24,37 @@
             android:layout_height="match_parent" >
 
              <ImageView
-                 android:id="@+id/movieImageIDDets"
+                 android:id="@+id/recipeImageIDDets"
                  android:background="@android:color/black"
                  android:layout_width="90dp"
                  android:layout_height="90dp" />
 
             <TextView
-                android:id="@+id/movieTitleIDDets"
+                android:id="@+id/recipeNameIDDets"
                 android:paddingLeft="5dp"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                android:text="Movie Title"
-                android:layout_toRightOf="@id/movieImageIDDets"
+                android:text="Recipe Name"
+                android:layout_toRightOf="@id/recipeImageIDDets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/movieReleaseIDDets"
+                android:id="@+id/recipeTimeIDDets"
                 android:padding="5dp"
-                android:layout_toRightOf="@id/movieImageIDDets"
-                android:text="Release Date:"
-                android:layout_below="@id/movieTitleIDDets"
+                android:layout_toRightOf="@id/recipeImageIDDets"
+                android:text="Total Time:"
+                android:layout_below="@id/recipeNameIDDets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
 
             <TextView
-                android:id="@+id/movieCatIDDet"
-                android:text="Category:"
+                android:id="@+id/recipeCuisineIDDet"
+                android:text="Cuisine:"
                 android:paddingLeft="5dp"
-                android:layout_below="@+id/movieReleaseIDDets"
-                android:layout_toRightOf="@id/movieImageIDDets"
+                android:layout_below="@+id/recipeTimeIDDets"
+                android:layout_toRightOf="@id/recipeImageIDDets"
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -62,9 +62,9 @@
             <TextView
                 android:id="@+id/movieRatingIDDet"
                 android:paddingLeft="5dp"
-                android:layout_below="@id/movieCatIDDet"
+                android:layout_below="@id/recipeCuisineIDDet"
                 android:text="Rating:"
-                android:layout_toRightOf="@id/movieImageIDDets"
+                android:layout_toRightOf="@id/recipeImageIDDets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -73,7 +73,7 @@
                 android:paddingLeft="5dp"
                 android:layout_below="@id/movieRatingIDDet"
                 android:text="Runtime:"
-                android:layout_toRightOf="@id/movieImageIDDets"
+                android:layout_toRightOf="@id/recipeImageIDDets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -83,7 +83,7 @@
                 android:text="Directed by:"
                 android:padding="5dp"
                 android:layout_marginTop="10dp"
-                android:layout_below="@id/movieImageIDDets"
+                android:layout_below="@id/recipeImageIDDets"
                 android:layout_alignParentLeft="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
