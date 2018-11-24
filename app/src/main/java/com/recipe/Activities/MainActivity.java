@@ -140,6 +140,12 @@ public class MainActivity extends AppCompatActivity {
                         recipe.setCourse(recipeObj.getString("course"));
                         recipe.setCuisine(recipeObj.getString("cuisine"));
                         recipe.setPhoto(recipeObj.getString("photo"));
+
+                        JSONArray arrJson = recipeObj.getJSONArray("ingredients");
+                        String[] arr = new String[arrJson.length()];
+                        for(int j = 0; j < arrJson.length(); j++)
+                            arr[j] = arrJson.getString(j);
+                        recipe.setIngredients(arr);
                         recipeList.add(recipe);
                     }
                     /**

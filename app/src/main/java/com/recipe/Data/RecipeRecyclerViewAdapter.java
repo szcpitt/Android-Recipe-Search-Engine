@@ -45,7 +45,7 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
                 .load(posterLink)
                 .placeholder(android.R.drawable.ic_btn_speak_now)
                 .into(holder.photo);
-        holder.totalTime.setText(recipe.getTotalTime());
+        holder.calories.setText(recipe.getTotalCal());
     }
 
     @Override
@@ -57,7 +57,7 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
 
         TextView title;
         ImageView photo;
-        TextView totalTime;
+        TextView calories;
         TextView cuisine;
 
         public ViewHolder(View itemView, final Context ctx) {
@@ -65,7 +65,7 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
             context = ctx;
             title = itemView.findViewById(R.id.recipeNameID);
             photo = itemView.findViewById(R.id.recipeImageID);
-            totalTime = itemView.findViewById(R.id.recipeTimeID);
+            calories = itemView.findViewById(R.id.caloriesID);
             cuisine = itemView.findViewById(R.id.recipeCatID);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

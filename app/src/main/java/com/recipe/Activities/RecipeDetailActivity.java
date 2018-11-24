@@ -26,85 +26,84 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private Recipe recipe;
     private TextView name;
     private ImageView image;
-    private TextView movieYear;
-    private TextView director;
-    private TextView actors;
+    private TextView course;
     private TextView cuisine;
-    private TextView rating;
-    private TextView writers;
-    private TextView plot;
-    private TextView boxOffice;
-    private TextView runtime;
+    private TextView totalTime;
+    private TextView totalCal;
+    private TextView ingredients;
+    private TextView sourceLink;
 
-    private RequestQueue queue;
-    private long recipeId;
+    //private RequestQueue queue;
+    //private long recipeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
-        queue = Volley.newRequestQueue(this);
+        //queue = Volley.newRequestQueue(this);
         recipe = (Recipe) getIntent().getSerializableExtra("recipe");
-        recipeId = recipe.getId();
+        //recipeId = recipe.getId();
         setUpUI();
-        getMovieDetails(recipeId);
+        getRecipeDetails();
     }
 
-    private void getMovieDetails(long id) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                Constants.URL + id+Constants.API_KEY, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try{
-                    if (response.has("Ratings")) {
-                        JSONArray ratings = response.getJSONArray("Ratings");
-                        String source = null;
-                        String value = null;
-                        if (ratings.length() > 0) {
-                            JSONObject mRatings = ratings.getJSONObject(ratings.length() - 1);
-                            source = mRatings.getString("Source");
-                            value = mRatings.getString("Value");
-                            rating.setText(source + " : " + value);
-                        }else {
-                            rating.setText("Ratings: N/A");
-                        }
-                        name.setText(response.getString("Title"));
-                        movieYear.setText("Released: " + response.getString("Released"));
-                        director.setText("Director: " + response.getString("Director"));
-                        writers.setText("Writers: " + response.getString("Writer"));
-                        plot.setText("Plot: " + response.getString("Plot"));
-                        runtime.setText("Runtime: " + response.getString("Runtime"));
-                        actors.setText("Actors: " + response.getString("Actors"));
-                        Picasso.with(getApplicationContext())
-                                .load(response.getString("Poster"))
-                                .into(image);
-                        boxOffice.setText("Box Office: " + response.getString("BoxOffice"));
-                    }
-                }catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("Error:", error.getMessage());
-
-            }
-        });
-        queue.add(jsonObjectRequest);
+    private void getRecipeDetails() {
+        name.setText(recipe.getName());
+        course.setText("Course: "+recipe.getCourse());
+        cuisine.setText("Cuisine: "+recipe.getCuisine());
+        totalTime.setText(recipe.getTotalTime());
+        totalCal.setText(recipe.getTotalCal());
+        String[] ingredients=recipe.getIngredients();
+        String ingredient="Ingrediens:\n";
+        for(int i=0;i<ingredients.length;i++)
+            ingredient+=ingredients[i]+"\n";
+        this.ingredients.setText(ingredient);
+        sourceLink.setText("Source Link:\n"+recipe.getSource_url());
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+//                Constants.URL + id+Constants.API_KEY, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                try{
+//                    if (response.has("Ratings")) {
+//                        JSONArray ratings = response.getJSONArray("Ratings");
+//                        String source = null;
+//                        String value = null;
+//                        if (ratings.length() > 0) {
+//                            JSONObject mRatings = ratings.getJSONObject(ratings.length() - 1);
+//                            source = mRatings.getString("Source");
+//                            value = mRatings.getString("Value");
+//                            totalCal.setText(source + " : " + value);
+//                        }else {
+//                            totalCal.setText("Ratings: N/A");
+//                        }
+//                        name.setText(response.getString("Title"));
+//                        totalTime.setText("Released: " + response.getString("Released"));
+//                        Picasso.with(getApplicationContext())
+//                                .load(response.getString("Poster"))
+//                                .into(image);
+//                    }
+//                }catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                VolleyLog.d("Error:", error.getMessage());
+//
+//            }
+//        });
+//        queue.add(jsonObjectRequest);
     }
 
     private void setUpUI() {
         name = findViewById(R.id.recipeNameIDDets);
         image = findViewById(R.id.recipeImageIDDets);
-        movieYear = findViewById(R.id.recipeTimeIDDets);
-        director = findViewById(R.id.directedByDet);
+        course = findViewById(R.id.courseIDDets);
         cuisine = findViewById(R.id.recipeCuisineIDDet);
-        rating = findViewById(R.id.movieRatingIDDet);
-        writers = findViewById(R.id.writersDet);
-        plot = findViewById(R.id.plotDet);
-        boxOffice = findViewById(R.id.boxOfficeDet);
-        runtime = findViewById(R.id.runtimeDet);
-        actors = findViewById(R.id.actorsDet);
+        totalTime = findViewById(R.id.recipeTimeIDDets);
+        totalCal = findViewById(R.id.totalCalIDDet);
+        ingredients = findViewById(R.id.ingredientDet);
+        sourceLink = findViewById(R.id.sourceLinkDet);
     }
 }
