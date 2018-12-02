@@ -1,7 +1,11 @@
 package com.recipe.Activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,7 +35,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private TextView totalTime;
     private TextView totalCal;
     private TextView ingredients;
-    private TextView sourceLink;
+    //private TextView sourceLink;
+    private Button sourceLinkButton;
 
     //private RequestQueue queue;
     //private long recipeId;
@@ -48,17 +53,30 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }
 
     private void getRecipeDetails() {
+        String posterLink = Constants.IMAGE_URL + recipe.getPhoto();
+        Picasso.with(getApplicationContext())
+            .load(posterLink)
+            .into(image);
         name.setText(recipe.getName());
         course.setText("Course: "+recipe.getCourse());
         cuisine.setText("Cuisine: "+recipe.getCuisine());
         totalTime.setText(recipe.getTotalTime());
         totalCal.setText(recipe.getTotalCal());
         String[] ingredients=recipe.getIngredients();
-        String ingredient="Ingrediens:\n";
+        String ingredient="";
         for(int i=0;i<ingredients.length;i++)
             ingredient+=ingredients[i]+"\n";
         this.ingredients.setText(ingredient);
-        sourceLink.setText("Source Link:\n"+recipe.getSource_url());
+        //sourceLinkButton.setText("Source Link:\n"+recipe.getSource_url());
+        sourceLinkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent viewIntent =
+                        new Intent("android.intent.action.VIEW",
+                                Uri.parse(recipe.getSource_url()));
+                startActivity(viewIntent);
+            }
+        });
 //        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
 //                Constants.URL + id+Constants.API_KEY, new Response.Listener<JSONObject>() {
 //            @Override
@@ -104,6 +122,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
         totalTime = findViewById(R.id.recipeTimeIDDets);
         totalCal = findViewById(R.id.totalCalIDDet);
         ingredients = findViewById(R.id.ingredientDet);
-        sourceLink = findViewById(R.id.sourceLinkDet);
+        sourceLinkButton = findViewById(R.id.linkButton);
     }
 }

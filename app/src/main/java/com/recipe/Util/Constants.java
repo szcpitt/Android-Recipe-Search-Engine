@@ -7,7 +7,7 @@ public class Constants {
     // API, the app may time-out.
     //&apikey=cdc4cef5
 
-    public static final String URL_LEFT = "http://10.0.2.2:8080/api/recipe/getRecipe?name=";
+    public static final String URL_LEFT = "http://10.0.2.2:8080/api/recipe/getRecipeList?name=";
     public static final String URL = "http://www.omdbapi.com/?i=";
     public static final String API_KEY = "&apikey=ef57aa7a";
     public static final String URL_RIGHT = "&page=2";
