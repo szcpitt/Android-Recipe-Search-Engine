@@ -11,10 +11,8 @@
 
 ## App Demo
 
-![Demo Image](./img/pic2.png =500x1000)
-
-![Demo Image](./img/pic1.png =500x1000)
-
+![](./img/pic2.png)
+![](./img/pic1.png)
 
 Here is the link of backend!
 [Spring Boot backend](https://github.com/szcpitt/SpringBoot-Recipe-Search)
