@@ -11,9 +11,9 @@
 
 ## App Demo
 
-![Demo Image](./img/pic2.png)
+![Demo Image](./img/pic2.png =500x1000)
 
-![Demo Image](./img/pic1.png)
+![Demo Image](./img/pic1.png =500x1000)
 
 
 Here is the link of backend!
